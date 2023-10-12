@@ -1,10 +1,10 @@
 import React from "react"
 
-export default function StartScreen({ handleClick, getQuestions }) {
+export default function StartScreen({ handleClick, getQuestionObject }) {
 
   function setData() {
     handleClick()
-    getQuestions()
+    getQuestionObject()
   }
 
     return (

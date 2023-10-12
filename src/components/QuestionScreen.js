@@ -1,18 +1,51 @@
 import React from "react"
 import Question from "./Question"
+import { decode } from "he";
 
-export default function QuestionScreen({ question, correctAnswer, incorrectAnswers, triviaData }) {
+export default function QuestionScreen({ questionObject }) {
 
+    const [correctAnswer, setCorrectAnswer] = React.useState()
 
-    //loop through data and assign questions to a question variable and answers to an answer variable. Maybe even a difficulty variable.
+    const [incorrectAnswers, setIncorrectAnswers] = React.useState()
+
+    const [category, setCategory] = React.useState()
+
+    const [question, setQuestion] = React.useState()
     
-    // organizeData()
-    // const viewData = JSON.stringify(triviaData[3].category)
+    const [difficulty, setDifficulty] = React.useState()
+    
+    // function assignQuestionData() {
+        
+    // }
+
+    React.useEffect(() => {
+        // questionObject.map((i) => {
+        //     return(
+        //         setCorrectAnswer(i.correctAnswer),
+        //         setIncorrectAnswers(i.incorrectAnswers),
+        //         setCategory(i.category),
+        //         setQuestion(i.question),
+        //         setDifficulty(i.difficulty)
+        //     )
+        // })
+
+        setQuestion(questionObject.map((i) => (decode(i.question))))
+        setCorrectAnswer(questionObject.map((i) => (decode(i.correctAnswer))))
+        setIncorrectAnswers(questionObject.map((i) => (i.incorrectAnswers)))
+        setCategory(questionObject.map((i) => (i.category)))
+        setDifficulty(questionObject.map((i) => (i.difficulty)))
+        
+    }, [questionObject])
+    
+    // const decodedQuestion = decode(question)
+    
 
     return(
         <main>
             <div>
-                <Question question={question} correctAnswer={correctAnswer} incorrectAnswers={incorrectAnswers}/>
+                {question}
+                {category}
+                {difficulty}
             </div>
         </main>
 

@@ -1,24 +1,22 @@
-import React from "react"
-import { he } from "he"
+import React from 'react';
 
-export default function Question({ correctAnswer, incorrectAnswers, question }) {
+export default function Question({ correctAnswer, incorrectAnswers, individualQuestion }) {
+ 
     
-    const heQuestion = he.decode("What is the name of the supercomputer located in the control room in &quot;Jurassic Park&quot; (1993)?")
+    // = questions.map((question) => (
+    //     decode(question)
+    // ))
+        
+        // decode(questions)
+    // const heCorrectAnswer = decode(correctAnswer)
+    // const heIncorrectAnswers = decode(incorrectAnswers)
      
-    // = question.map((item) => {
-    //     return (
-    //         {
-    //             question: he.decode(JSON.stringify(item))
-    //         }
-    //     )
-    // })
 
-    
+
     return(
         <div>
             {correctAnswer}
             {incorrectAnswers}
-            {heQuestion}
         </div>
     )
 }

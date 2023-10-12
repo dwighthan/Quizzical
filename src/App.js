@@ -11,8 +11,6 @@ import React from 'react'
 import QuestionScreen from "./components/QuestionScreen"
 import StartScreen from "./components/StartScreen"
 import "./styles.css"
-import { he } from "he"
-
 
 function App() {
 
@@ -20,18 +18,15 @@ function App() {
   const [showQuestions, setShowQuestions] = React.useState(false)
 
   //this function will show the question screen when the button on the start screen is pressed
+  
+  //this state will hold the data received from the OTDB API
+  const [triviaData, setTriviaData] = React.useState()
+  
+  const [questionObject, setQuestionObject] = React.useState()
+  
   function toggleScreen() {
     setShowQuestions((prev) => (!prev))
   }
-
-  //this state will hold the data received from the OTDB API
-  const [triviaData, setTriviaData] = React.useState()
-
-  const [question, setQuestion] = React.useState()
-
-  const [correctAnswer, setCorrectAnswer] = React.useState()
-
-  const [incorrectAnswers, setIncorrectAnswers] = React.useState()
 
   //this useEffect will fetch the data from the Open Trivia Database (OTDB)
   React.useEffect(() => {
@@ -45,35 +40,29 @@ function App() {
 
   }, [])
 
-  function getQuestions() {
-      
-      setQuestion(triviaData.map((i) => {
-          return (
-              i.question
-          )
-      }))
-  
-      setCorrectAnswer(triviaData.map((i) => {
-          return (
-              i.correct_answer
-          )
-      }))
-
-      setIncorrectAnswers(triviaData.map((i) => {
-        return (
-          i.incorrect_answers
+  function getQuestionObject() {
+    return (  
+      setQuestionObject(
+        triviaData.map((i) => (
+          {
+            question: i.question,
+            correctAnswer: i.correct_answer,
+            incorrectAnswers: i.incorrect_answers,
+            category: i.category, 
+            difficulty: i.difficulty,
+          }
         )
-      }))
+        )
+      )
+    )
   }
-
-  //showQuestions ? <QuestionScreen/> : <StartScreen/>
 
   return (
     <div>
       {
         showQuestions ? 
-        <QuestionScreen triviaData={triviaData} question={question} correctAnswer={correctAnswer} incorrectAnswers={incorrectAnswers}/> : 
-        <StartScreen handleClick={toggleScreen} getQuestions = {getQuestions}/>
+        <QuestionScreen questionObject={questionObject}/> : 
+        <StartScreen handleClick={toggleScreen} getQuestionObject = {getQuestionObject}/>
       }
     </div>
 
